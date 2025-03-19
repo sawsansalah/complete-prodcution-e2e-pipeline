@@ -7,12 +7,8 @@ pipeline {
   }
 
   environment {
-        APP_NAME = "complete-prodcution-e2e-pipeline"
-        RELEASE = "1.0.0"
-        
-        IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
-        IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
-        /* JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN") */
+             container = "/kaniko/executor -f /home/jenkins/agent/workspace/Kaniko/Dockerfile -c /home/jenkins/agent/workspace/Kaniko --insecure --skip-tls-verify '--cache=true' '--destination=docker.io/3788/Kaniko-demo:latest'"
+
 
     }
 
@@ -29,15 +25,8 @@ pipeline {
     stage('Build & Push with Kaniko') {
       steps {
         container(name: 'kaniko') {
-          sh '''
-           #/kaniko/executor -f /home/jenkins/agent/workspace/Kaniko/Dockerfile -c /home/jenkins/agent/workspace/Kaniko --insecure --skip-tls-verify '--cache=true' '--destination=docker.io/3788/kaniko-demo:latest'
-           /kaniko/executor --dockerfile=/home/jenkins/agent/workspace/Kaniko/Dockerfile \
-            --context=/home/jenkins/agent/workspace/Kaniko \
-            --insecure --skip-tls-verify --cache=true \
-            --destination=docker.io/3788/kaniko-demo:latest
+            sh "${container}"
 
-
-          '''
         }
       }
     }
