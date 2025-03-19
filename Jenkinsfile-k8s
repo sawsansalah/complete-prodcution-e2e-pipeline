@@ -28,8 +28,8 @@ pipeline {
 
     stage('Build & Push with Kaniko') {
       steps {
-        container(name: 'kaniko', shell: '/busybox/sh') {
-          sh '''#!/busybox/sh
+        container(name: 'kaniko') {
+          sh '''
            /kaniko/executor -f /home/jenkins/agent/workspace/Kaniko/Dockerfile -c /home/jenkins/agent/workspace/Kaniko --insecure --skip-tls-verify '--cache=true' '--destination=docker.io/3788/kaniko-demo:latest'
 
           '''
