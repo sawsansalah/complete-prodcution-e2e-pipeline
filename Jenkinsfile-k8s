@@ -14,9 +14,12 @@ pipeline {
 
   stages {
 
-    stage("Cleanup Workspace") {
+    stage("package") {
       steps {
-        cleanWs()
+        
+            container('maven') {
+              sh 'mvn package -DskipTests'
+            
       }
     }
 
