@@ -30,7 +30,12 @@ pipeline {
       steps {
         container(name: 'kaniko') {
           sh '''
-           /kaniko/executor -f /home/jenkins/agent/workspace/Kaniko/Dockerfile -c /home/jenkins/agent/workspace/Kaniko --insecure --skip-tls-verify '--cache=true' '--destination=docker.io/3788/kaniko-demo:latest'
+           #/kaniko/executor -f /home/jenkins/agent/workspace/Kaniko/Dockerfile -c /home/jenkins/agent/workspace/Kaniko --insecure --skip-tls-verify '--cache=true' '--destination=docker.io/3788/kaniko-demo:latest'
+           /kaniko/executor --dockerfile=/home/jenkins/agent/workspace/Kaniko/Dockerfile \
+            --context=/home/jenkins/agent/workspace/Kaniko \
+            --insecure --skip-tls-verify --cache=true \
+            --destination=docker.io/3788/kaniko-demo:latest
+
 
           '''
         }
